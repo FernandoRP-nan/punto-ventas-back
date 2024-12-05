@@ -53,4 +53,59 @@ router.get("/", async (req, res) => {
   }
 });
 
+// API to get sales report by shift
+router.get("/cuts", async (req, res) => {
+  const { date } = req.query;
+
+  // Validar que se haya proporcionado una fecha
+  if (!date) {
+    return res.status(400).json({ error: "Date is required" });
+  }
+
+  // Crear objetos de fecha usando el formato ISO 8601
+  const morningStart = new Date(`${date}T06:00:00`); // 6 AM
+  const morningEnd = new Date(`${date}T14:00:00`); // 2 PM
+
+  const eveningStart = new Date(`${date}T14:00:00`); // 2 PM
+  const eveningEnd = new Date(`${date}T22:00:00`); // 10 PM
+
+  // Consultas SQL
+  const morningQuery = `
+        SELECT SUM(sd.quantity * sd.unit_price) as total_sales
+        FROM sales s
+        JOIN sale_details sd ON s.id = sd.sale_id
+        WHERE s.date_time BETWEEN ? AND ?
+      `;
+
+  const eveningQuery = `
+        SELECT SUM(sd.quantity * sd.unit_price) as total_sales
+        FROM sales s
+        JOIN sale_details sd ON s.id = sd.sale_id
+        WHERE s.date_time BETWEEN ? AND ?
+      `;
+
+  try {
+    // Ejecutar las consultas
+    const [morningResults] = await pool.query(morningQuery, [
+      morningStart,
+      morningEnd,
+    ]);
+    const [eveningResults] = await pool.query(eveningQuery, [
+      eveningStart,
+      eveningEnd,
+    ]);
+
+    //console.log(morningResults);
+    //console.log(eveningResults);
+
+    res.json({
+      morning_sales: morningResults[0]?.total_sales || 0,
+      evening_sales: eveningResults[0]?.total_sales || 0,
+    });
+  } catch (error) {
+    console.error("Error fetching sales cuts:", error);
+    res.status(500).json({ error: "Error fetching sales cuts" });
+  }
+});
+
 module.exports = router;
