@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors'); // Importar el middleware CORS
+const cors = require("cors"); // Importar el middleware CORS
 const bodyParser = require("body-parser");
 const app = express();
 const dotenv = require("dotenv");
@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use("/auth", require("./routes/auth"));
 app.use("/inventory", require("./routes/inventory"));
 app.use("/sales", require("./routes/sales"));
+app.use("/purchases", require("./routes/purchases"));
 
 // Puerto del servidor
 const PORT = process.env.PORT || 3000;
