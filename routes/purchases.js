@@ -31,6 +31,12 @@ router.post("/", async (req, res) => {
       product_id,
     ]);
 
+    // Registrar el movimiento de inventario
+    await pool.query(
+      "INSERT INTO inventory_movement_logs (product_id, action, quantity) VALUES (?, ?, ?)",
+      [product_id, "ENTRADA", quantity] // Registro de entrada
+    );
+
     res
       .status(201)
       .json({ id: purchaseResult.insertId, manager_id, product_id, quantity });

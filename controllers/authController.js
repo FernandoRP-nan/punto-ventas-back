@@ -29,7 +29,28 @@ exports.login = async (req, res) => {
       }
     );
 
+    // Registrar el inicio de sesión
+    await pool.query(
+      `INSERT INTO session_logs (user_id, action) VALUES (?, ?)`,
+      [user.id, "LOGIN"]
+    );
+
     res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Error en el servidor", error });
+  }
+};
+
+exports.logout = async (req, res) => {
+  const userId = req.user.id; // Asumiendo que tienes el ID del usuario en el token
+
+  try {
+    // Registrar el cierre de sesión
+    await pool.query(
+      `INSERT INTO session_logs (user_id, action) VALUES (?, ?)`,
+      [userId, "LOGOUT"]
+    );
+    res.json({ message: "Logout exitoso" });
   } catch (error) {
     res.status(500).json({ message: "Error en el servidor", error });
   }
