@@ -17,6 +17,7 @@ app.use("/auth", require("./routes/auth"));
 app.use("/inventory", require("./routes/inventory"));
 app.use("/sales", require("./routes/sales"));
 app.use("/purchases", require("./routes/purchases"));
+app.use("/login-logs", require("./routes/loginLogs"));
 
 // Puerto del servidor
 const PORT = process.env.PORT || 3000;
