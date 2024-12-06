@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../config/db"); // Asegúrate de tener el archivo db.js configurado
+const pool = require("../config/db");
 
 // Registrar una venta
 router.post("/", async (req, res) => {
@@ -100,9 +100,6 @@ router.get("/cuts", async (req, res) => {
       eveningStart,
       eveningEnd,
     ]);
-
-    //console.log(morningResults);
-    //console.log(eveningResults);
 
     res.json({
       morning_sales: morningResults[0]?.total_sales || 0,

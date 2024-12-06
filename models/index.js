@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const pool = require("../config/db"); // Importa el pool de conexión que ya tienes configurado
+const pool = require("../config/db");
 const Sequelize = require("sequelize");
 
 // Establece la conexión a la base de datos con Sequelize
@@ -31,9 +31,8 @@ fs.readdirSync(__dirname)
     models[model.name] = model;
   });
 
-// Relaciona los modelos si es necesario
 models.Product.associate && models.Product.associate(models);
 models.Sale.associate && models.Sale.associate(models);
 
-// Exporta el objeto de modelos y la instancia de Sequelize
+
 module.exports = { sequelize, Sequelize, models };

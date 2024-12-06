@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../config/db"); // Importa el pool de conexión
+const pool = require("../config/db");
 
 // Registrar una compra
 router.post("/", async (req, res) => {

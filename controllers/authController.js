@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  const userId = req.user.id; // Asumiendo que tienes el ID del usuario en el token
+  const userId = req.user.id;
 
   try {
     // Registrar el cierre de sesión

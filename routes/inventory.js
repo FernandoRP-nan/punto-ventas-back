@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../config/db"); // Asegúrate de tener el archivo db.js configurado
+const pool = require("../config/db");
 
 // Obtener todos los productos
 router.get("/", async (req, res) => {

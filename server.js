@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors"); // Importar el middleware CORS
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 const dotenv = require("dotenv");
